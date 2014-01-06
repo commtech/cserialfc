@@ -561,22 +561,40 @@ int serialfc_write(serialfc_handle h, char *buf, unsigned size, unsigned *bytes_
                    OVERLAPPED *o)
 {
 //TODO
+    UNUSED(h);
+    UNUSED(buf);
+    UNUSED(size);
+    UNUSED(bytes_written);
+    UNUSED(o);
+
+    return 0;
+#if 0
   BOOL result;
         
   result = WriteFile(h, buf, size, (DWORD*)bytes_written, o);
 
   return (result == TRUE) ? ERROR_SUCCESS : GetLastError();
+#endif
 }
 
 int serialfc_read(serialfc_handle h, char *buf, unsigned size, unsigned *bytes_read, 
                   OVERLAPPED *o)
 {
 //TODO
+    UNUSED(h);
+    UNUSED(buf);
+    UNUSED(size);
+    UNUSED(bytes_read);
+    UNUSED(o);
+
+    return 0;
+#if 0
   BOOL result;
 
   result = ReadFile(h, buf, size, (DWORD*)bytes_read, o);
 
   return (result == TRUE) ? ERROR_SUCCESS : GetLastError();
+#endif
 }
 
 int serialfc_disconnect(serialfc_handle h)
