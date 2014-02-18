@@ -2,7 +2,7 @@
 This README file is best viewed [online](http://github.com/commtech/cserialfc/).
 
 
-## Dependencies
+## Build Dependencies
 - C compiler (GCC & Visual Studio tested)
 
 
