@@ -37,6 +37,10 @@ int translate_error(int e)
 {
 #ifdef _WIN32
     switch (e) {
+        case ERROR_ACCESS_DENIED:
+            return SERIALFC_INVALID_ACCESS;
+        case ERROR_FILE_NOT_FOUND:
+            return SERIALFC_PORT_NOT_FOUND;
         case ERROR_NOT_SUPPORTED:
             return SERIALFC_NOT_SUPPORTED;
         case ERROR_INVALID_PARAMETER:
@@ -46,6 +50,10 @@ int translate_error(int e)
     }
 #else
     switch (e) {
+        case ENOENT:
+            return SERIALFC_PORT_NOT_FOUND;
+        case EACCES:
+            return SERIALFC_INVALID_ACCESS;
         case EPROTONOSUPPORT:
             return SERIALFC_NOT_SUPPORTED;
         case EINVAL:
