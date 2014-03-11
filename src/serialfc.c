@@ -556,44 +556,50 @@ int serialfc_get_card_type(serialfc_handle h, unsigned *type)
 {
     return ioctl_get_integer(h, IOCTL_FASTCOM_GET_CARD_TYPE, (int *)type);
 }
- 
-int serialfc_write(serialfc_handle h, char *buf, unsigned size, unsigned *bytes_written, 
-                   OVERLAPPED *o)
+
+int serialfc_write(serialfc_handle h, char *buf, unsigned size,
+                   unsigned *bytes_written, OVERLAPPED *o)
 {
-//TODO
-    UNUSED(h);
-    UNUSED(buf);
-    UNUSED(size);
-    UNUSED(bytes_written);
+    int result;
+
+#ifdef _WIN32
+    result = WriteFile(h, buf, size, (DWORD*)bytes_written, o);
+
+    return (result == TRUE) ? 0 : translate_error(GetLastError());
+#else
     UNUSED(o);
 
-    return 0;
-#if 0
-  BOOL result;
-        
-  result = WriteFile(h, buf, size, (DWORD*)bytes_written, o);
+    result = write(h, buf, size);
 
-  return (result == TRUE) ? ERROR_SUCCESS : GetLastError();
+    if (result == -1)
+        return translate_error(errno);
+
+    *bytes_written = result;
+
+    return 0;
 #endif
 }
 
-int serialfc_read(serialfc_handle h, char *buf, unsigned size, unsigned *bytes_read, 
+int serialfc_read(serialfc_handle h, char *buf, unsigned size, unsigned *bytes_read,
                   OVERLAPPED *o)
 {
-//TODO
-    UNUSED(h);
-    UNUSED(buf);
-    UNUSED(size);
-    UNUSED(bytes_read);
+    int result;
+#ifdef _WIN32
+
+    result = ReadFile(h, buf, size, (DWORD*)bytes_read, o);
+
+    return (result == TRUE) ? 0 : translate_error(GetLastError());
+#else
     UNUSED(o);
 
+    result = read(h, buf, size);
+
+    if (result == -1)
+        return translate_error(errno);
+
+    *bytes_read = result;
+
     return 0;
-#if 0
-  BOOL result;
-
-  result = ReadFile(h, buf, size, (DWORD*)bytes_read, o);
-
-  return (result == TRUE) ? ERROR_SUCCESS : GetLastError();
 #endif
 }
 
