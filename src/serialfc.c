@@ -46,7 +46,7 @@ int translate_error(int e)
     }
 #else
     switch (e) {
-        case ENOTSUP:
+        case EPROTONOSUPPORT:
             return SERIALFC_NOT_SUPPORTED;
         case EINVAL:
             return SERIALFC_INVALID_PARAMETER;
