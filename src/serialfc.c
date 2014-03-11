@@ -276,15 +276,6 @@ int serialfc_get_termination(serialfc_handle h, unsigned *status)
     return ioctl_get_boolean(h, IOCTL_FASTCOM_GET_TERMINATION, status);
 }
 
-/******************************************************************************/
-/*!
-	
-    - FSCC Family (16c950): 4 - 16
-    - Async-335 Family (17D15X): 8, 16
-    - Async-PCIe Family (17V35X): 4, 8, 16
-
-*/
-/******************************************************************************/
 int serialfc_set_sample_rate(serialfc_handle h, unsigned rate)
 {
     return ioctl_set_integer(h, IOCTL_FASTCOM_SET_SAMPLE_RATE, rate);
@@ -295,15 +286,6 @@ int serialfc_get_sample_rate(serialfc_handle h, unsigned *rate)
     return ioctl_get_integer(h, IOCTL_FASTCOM_GET_SAMPLE_RATE, (int *)rate);
 }
 
-/******************************************************************************/
-/*!
-	
-    - FSCC Family: 0 - 127
-    - Async-335 Family (17D15X): 0 - 64
-    - Async-PCIe Family (17V35X): 0 - 255
-
-*/
-/******************************************************************************/
 int serialfc_set_tx_trigger(serialfc_handle h, unsigned level)
 {
     return ioctl_set_integer(h, IOCTL_FASTCOM_SET_TX_TRIGGER, level);
@@ -314,224 +296,72 @@ int serialfc_get_tx_trigger(serialfc_handle h, unsigned *level)
     return ioctl_get_integer(h, IOCTL_FASTCOM_GET_TX_TRIGGER, (int *)level);
 }
 
-/******************************************************************************/
-/*!
-	
-    - FSCC Family (16c950): 0 - 127
-    - Async-335 Family (17D15X): 0 - 64
-    - Async-PCIe Family (17V35X): 0 - 255
-
-*/
-/******************************************************************************/
 int serialfc_set_rx_trigger(serialfc_handle h, unsigned level)
 {
     return ioctl_set_integer(h, IOCTL_FASTCOM_SET_RX_TRIGGER, level);
 }
 
-/******************************************************************************/
-/*!
-
-
-  \todo
-    This is only supported in the FSCC cards but isn't currently implemented.
-
-*/
-/******************************************************************************/
 int serialfc_get_rx_trigger(serialfc_handle h, unsigned *level)
 {
     return ioctl_get_integer(h, IOCTL_FASTCOM_GET_RX_TRIGGER, (int *)level);
 }
 
-/******************************************************************************/
-/*!
-	
-  \note
-    This is only supported on the Async-335 and FSCC cards. Each also has it's 
-	own supported range.
-	
-    - FSCC Family (16c950): 200 Hz - 270 MHz
-    - Async-335 Family (17D15X): 6 MHz - 180 MHz
-	
-	The Async-PCIe family doesn't use a variable clock generator to achieve
-	baud rates so this is not required.
-
-*/
-/******************************************************************************/
 int serialfc_set_clock_rate(serialfc_handle h, unsigned rate)
 {
     //TODO: This needs something different for linux
     return ioctl_set_integer(h, IOCTL_FASTCOM_SET_CLOCK_RATE, rate);
 }
 
-/******************************************************************************/
-/*!
-	
-  \note
-    This is only supported on the FSCC cards.
-
-  \note
-    If you apply an external clock to the card before turning on isochronous
-    mode your system will freeze due to too many serial interrupts. Make sure 
-    and apply the clock after you are the isochronous mode (so the interrupts 
-    are disabled).
-	
-  \note
-	There are 8 different isochronous combinations you can use.
-	
-	0: Transmit using external RI#
-	1: Transmit using internal BRG
-	2: Receive using external DSR#
-	3: Transmit using external RI#, receive using external DSR#
-	4: Transmit using internal BRG, receive using external DSR#
-	5: Receive using internal BRG
-	6: Transmit using external RI#, receive using internal BRG
-	7: Transmit using internal BRG, receive using internal BRG
-	8: Transmit and receive using external RI#
-	9: Transmit clock is output on DTR#
-   10: Transmit clock is output on DTR#, receive using external DSR#
-
-*/
-/******************************************************************************/
 int serialfc_enable_isochronous(serialfc_handle h, unsigned mode)
 {
     return ioctl_set_integer(h, IOCTL_FASTCOM_ENABLE_ISOCHRONOUS, mode);
 }
 
-/******************************************************************************/
-/*!
-	
-  \note
-    This is only supported on the FSCC cards.
-
-  \note
-    If you have an external clock applied to the card while turning off 
-    isochronous mode your system will freeze due to too many serial interrupts. 
-    Make sure and remove the clock before you disable isochronous mode (while 
-    the interrupts are disabled).
-
-*/
-/******************************************************************************/
 int serialfc_disable_isochronous(serialfc_handle h)
 {
     return ioctl_action(h, IOCTL_FASTCOM_DISABLE_ISOCHRONOUS);
 }
 
-/******************************************************************************/
-/*!
-	
-  \note
-    This is only supported on the FSCC cards.
-
-*/
-/******************************************************************************/
 int serialfc_get_isochronous(serialfc_handle h, int *mode)
 {
     return ioctl_get_integer(h, IOCTL_FASTCOM_GET_ISOCHRONOUS, mode);
 }
 
-/******************************************************************************/
-/*!
-
-  
-  \note
-    This is only supported on the FSCC cards.
-
-*/
-/******************************************************************************/
 int serialfc_enable_external_transmit(serialfc_handle h, unsigned num_frames)
 {
     return ioctl_set_integer(h, IOCTL_FASTCOM_ENABLE_EXTERNAL_TRANSMIT, num_frames);
 }
 
-/******************************************************************************/
-/*!
-
-  
-  \note
-    This is only supported on the FSCC cards.
-
-*/
-/******************************************************************************/
 int serialfc_disable_external_transmit(serialfc_handle h)
 {
     return ioctl_action(h, IOCTL_FASTCOM_DISABLE_EXTERNAL_TRANSMIT);
 }
 
-/******************************************************************************/
-/*!
-
-  
-  \note
-    This is only supported on the FSCC cards.
-
-*/
-/******************************************************************************/
 int serialfc_get_external_transmit(serialfc_handle h, unsigned *num_frames)
 {
     return ioctl_get_integer(h, IOCTL_FASTCOM_GET_EXTERNAL_TRANSMIT, (int *)num_frames);
 }
 
-/******************************************************************************/
-/*!
-
-  
-  \note
-    This is only supported on the FSCC cards.
-
-*/
-/******************************************************************************/
 int serialfc_set_frame_length(serialfc_handle h, unsigned num_chars)
 {
     return ioctl_set_integer(h, IOCTL_FASTCOM_SET_FRAME_LENGTH, num_chars);
 }
 
-/******************************************************************************/
-/*!
-  
-  \note
-    This is only supported on the FSCC cards.
-
-*/
-/******************************************************************************/
 int serialfc_get_frame_length(serialfc_handle h, unsigned *num_chars)
 {
     return ioctl_get_integer(h, IOCTL_FASTCOM_GET_FRAME_LENGTH, (int *)num_chars);
 }
 
-/******************************************************************************/
-/*!
-  
-  \note
-    This is only supported on the FSCC cards.
-
-*/
-/******************************************************************************/
 int serialfc_enable_9bit(serialfc_handle h)
 {
     return ioctl_action(h, IOCTL_FASTCOM_ENABLE_9BIT);
 }
 
-/******************************************************************************/
-/*!
-  
-  \note
-    This is only supported on the FSCC cards.
-
-*/
-/******************************************************************************/
 int serialfc_disable_9bit(serialfc_handle h)
 {
     return ioctl_action(h, IOCTL_FASTCOM_DISABLE_9BIT);
 }
 
-/******************************************************************************/
-/*!
-  
-  \note
-    This is only supported on the FSCC cards.
-
-*/
-/******************************************************************************/
 int serialfc_get_9bit(serialfc_handle h, unsigned *status)
 {
     return ioctl_get_boolean(h, IOCTL_FASTCOM_GET_9BIT, status);
