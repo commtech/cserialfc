@@ -22,7 +22,7 @@
 #define SERIALFC_H
 
 #ifdef __cplusplus
-extern "C" 
+extern "C"
 {
 #endif
 
@@ -180,7 +180,9 @@ DLL_EXPORT int serialfc_disable_fixed_baud_rate(serialfc_handle h);
 DLL_EXPORT int serialfc_get_fixed_baud_rate(serialfc_handle h, int *rate);
 DLL_EXPORT int serialfc_get_card_type(serialfc_handle h, unsigned *type);
 DLL_EXPORT int serialfc_write(serialfc_handle h, char *buf, unsigned size, unsigned *bytes_written, OVERLAPPED *o);
+DLL_EXPORT int serialfc_write_with_blocking(serialfc_handle h, char *buf, unsigned size, unsigned *bytes_written);
 DLL_EXPORT int serialfc_read(serialfc_handle h, char *buf, unsigned size, unsigned *bytes_read, OVERLAPPED *o);
+DLL_EXPORT int serialfc_read_with_blocking(serialfc_handle h, char *buf, unsigned size, unsigned *bytes_read);
 DLL_EXPORT int serialfc_disconnect(serialfc_handle h);
 
 #ifdef __cplusplus

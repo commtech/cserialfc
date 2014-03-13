@@ -418,6 +418,26 @@ int serialfc_write(serialfc_handle h, char *buf, unsigned size,
 #endif
 }
 
+int serialfc_write_with_blocking(serialfc_handle h, char *buf, unsigned size,
+                                 unsigned *bytes_written)
+{
+#ifdef _WIN32
+    int result;
+    OVERLAPPED ol;
+
+    memset(&ol, 0, sizeof(ol));
+
+    result = serialfc_write(h, buf, size, bytes_written, &ol);
+
+    if (result == 997)
+        result = GetOverlappedResult(h, &ol, (DWORD *)bytes_written, 1);
+
+    return (result == TRUE) ? 0 : translate_error(GetLastError());
+#else
+    return serialfc_write(h, buf, size, bytes_written, 0);
+#endif
+}
+
 int serialfc_read(serialfc_handle h, char *buf, unsigned size, unsigned *bytes_read,
                   OVERLAPPED *o)
 {
@@ -438,6 +458,26 @@ int serialfc_read(serialfc_handle h, char *buf, unsigned size, unsigned *bytes_r
     *bytes_read = result;
 
     return 0;
+#endif
+}
+
+int serialfc_read_with_blocking(serialfc_handle h, char *buf, unsigned size,
+                                unsigned *bytes_read)
+{
+#ifdef _WIN32
+    int result;
+    OVERLAPPED ol;
+
+    memset(&ol, 0, sizeof(ol));
+
+    result = serialfc_read(h, buf, size, bytes_read, &ol);
+
+    if (result == 997)
+        result = GetOverlappedResult(h, &ol, (DWORD *)bytes_read, 1);
+
+    return (result == TRUE) ? 0 : translate_error(GetLastError());
+#else
+    return serialfc_read(h, buf, size, bytes_read, 0);
 #endif
 }
 
