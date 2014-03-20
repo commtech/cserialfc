@@ -80,8 +80,13 @@ int main(int argc, char *argv[])
 
 int init(serialfc_handle h)
 {
+#ifdef _WIN32
     DCB mdcb;
     COMMTIMEOUTS cto;
+#else
+    struct termios tios;
+#endif
+    unsigned type = 0;
     int e = 0;
 
     e = serialfc_set_clock_rate(h, 18432000);
@@ -151,11 +156,12 @@ int init(serialfc_handle h)
     }
 
     e = serialfc_disable_fixed_baud_rate(h);
-    if (e != 0) {
+    if (e != 0 && e != SERIALFC_NOT_SUPPORTED) {
         fprintf(stderr, "serialfc_disable_fixed_baud_rate failed with %d\n", e);
         return EXIT_FAILURE;
     }
 
+#ifdef _WIN32
     memset(&mdcb, 0, sizeof(mdcb));
     memset(&cto, 0, sizeof(cto));
 
@@ -177,8 +183,31 @@ int init(serialfc_handle h)
     }
 
     PurgeComm(h, PURGE_TXCLEAR | PURGE_RXCLEAR);
+#else
+    ioctl(h, IOCTL_FASTCOM_GET_CARD_TYPE, &type);
 
-    return ERROR_SUCCESS;
+    if (type == SERIALFC_CARD_TYPE_PCIe) {
+        int mode = 0;
+
+        ioctl(h, TIOCMGET, &mode);
+        mode &= ~TIOCM_DTR; /* Set DTR to 1 (transmitter always on, 422) */
+        ioctl(h, TIOCMSET, &mode);
+    }
+
+    tcgetattr(h, &tios);
+
+    tios.c_iflag = IGNBRK;
+    tios.c_oflag = 0;
+    tios.c_cflag = CS8 | CREAD | CLOCAL;
+    tios.c_lflag &= (~ICANON | ISIG | ECHO);
+
+    cfsetospeed(&tios, B115200);
+    cfsetispeed(&tios, 0); /* Set ispeed = ospeed */
+
+    tcsetattr(h, TCSANOW, &tios);
+#endif
+
+    return EXIT_SUCCESS;
 }
 
 int loop(serialfc_handle h)
