@@ -73,7 +73,7 @@ int serialfc_enable_isochronous(serialfc_handle h, unsigned mode)
 #include <serialfc.h>
 ...
 
-serialfc_enable_isochronous(h);
+serialfc_enable_isochronous(h, 7);
 ```
 
 

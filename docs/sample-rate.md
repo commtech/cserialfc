@@ -37,7 +37,7 @@ int serialfc_get_sample_rate(serialfc_handle h, unsigned *rate)
 | | 0 | Success |
 
 ###### Examples
-```
+```c
 #include <serialfc.h>
 ...
 
@@ -63,7 +63,7 @@ int serialfc_set_sample_rate(serialfc_handle h, unsigned rate)
 | `SERIALFC_INVALID_PARAMETER` | 17001 | Invalid parameter |
 
 ###### Examples
-```
+```c
 #include <serialfc.h>
 ...
 

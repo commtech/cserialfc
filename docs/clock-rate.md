@@ -40,11 +40,11 @@ int serialfc_set_clock_rate(serialfc_handle h, unsigned rate)
 | `SERIALFC_INVALID_PARAMETER` | 17001 | Invalid parameter |
 
 ###### Examples
-Set the port's clock frequency to 18.432 MHz.
-```
+```c
 #include <serialfc.h>
 ...
 
+/* 18.432 MHz */
 serialfc_set_clock_rate(h, 18432000)
 ```
 

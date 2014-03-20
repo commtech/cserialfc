@@ -32,7 +32,7 @@ int serialfc_get_frame_length(serialfc_handle h, unsigned *num_chars)
 | `SERIALFC_NOT_SUPPORTED` | 17000 | Not supported on this family of cards |
 
 ###### Examples
-```
+```c
 #include <serialfc.h>
 ...
 
@@ -59,7 +59,7 @@ int serialfc_set_frame_length(serialfc_handle h, unsigned num_chars)
 | `SERIALFC_INVALID_PARAMETER` | 17001 | Invalid parameter |
 
 ###### Examples
-```
+```c
 #include <serialfc.h>
 ...
 
