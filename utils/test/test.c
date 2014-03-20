@@ -186,7 +186,7 @@ int init(serialfc_handle h)
 #else
     ioctl(h, IOCTL_FASTCOM_GET_CARD_TYPE, &type);
 
-    if (type == SERIALFC_CARD_TYPE_PCIe) {
+    if (type == SERIALFC_CARD_TYPE_PCIE) {
         int mode = 0;
 
         ioctl(h, TIOCMGET, &mode);
