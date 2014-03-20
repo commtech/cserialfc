@@ -6,3 +6,4 @@
 *~
 *.o
 utils/test/test
+*.exe
