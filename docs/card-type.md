@@ -29,7 +29,7 @@ int serialfc_get_card_type(serialfc_handle h, unsigned *type)
 | | 0 | Success |
 
 ###### Examples
-```
+```c
 #include <serialfc.h>
 ...
 

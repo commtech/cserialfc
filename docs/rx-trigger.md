@@ -29,7 +29,7 @@ int serialfc_get_tx_trigger(serialfc_handle h, unsigned *level)
 ```
 
 ###### Examples
-```
+```c
 #include <serialfc.h>
 ...
 
@@ -50,7 +50,7 @@ int serialfc_set_rx_trigger(serialfc_handle h, unsigned level)
 | `SERIALFC_INVALID_PARAMETER` | 17001 | Invalid parameter |
 
 ###### Examples
-```
+```c
 #include <serialfc.h>
 ...
 
