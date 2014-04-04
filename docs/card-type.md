@@ -19,6 +19,13 @@
 int serialfc_get_card_type(serialfc_handle h, unsigned *type)
 ```
 
+| Card Type | Value | Description |
+| --------- | -----:| ----------- |
+| `SERIALFC_CARD_TYPE_PCI` | 0 | Async-335 (17D15X) |
+| `SERIALFC_CARD_TYPE_PCIE` | 1 | Async-PCIe (17V35X) |
+| `SERIALFC_CARD_TYPE_FSCC` | 2 | FSCC (16C950) |
+| `SERIALFC_CARD_TYPE_UNKNOWN` | 3 | Unknown |
+
 | Parameter | Type | Description |
 | --------- | ---- | ----------- |
 | `h` | `serialfc_handle` | The handle to your port |
