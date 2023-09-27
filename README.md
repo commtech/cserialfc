@@ -46,6 +46,6 @@ We follow [Semantic Versioning](http://semver.org/) when creating releases.
 
 ## License
 
-Copyright (C) 2019 [Commtech, Inc.](https://fastcomproducts.com/)
+Copyright (C) 2023 [Commtech, Inc.](https://fastcomproducts.com/)
 
 Licensed under the [MIT license](https://opensource.org/licenses/MIT).
